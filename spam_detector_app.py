@@ -737,6 +737,9 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+print("Current working directory:", os.getcwd())
+print("Files in directory:", os.listdir())
+
 # Load model
 model = load_model()
 
@@ -1789,3 +1792,4 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
