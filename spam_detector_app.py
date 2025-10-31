@@ -6,6 +6,7 @@ import plotly.express as px
 from datetime import datetime
 import time
 import dill
+import os
 import re
 from textblob import TextBlob
 import joblib
@@ -542,13 +543,23 @@ STOP_WORDS, LEMMATIZER, SIA = init_nlp_tools()
 
 # Load model
 def load_model():
-    """Load the trained model"""
+    """Load the trained model safely from the current directory"""
     try:
-        with open('spam_detector_model.pkl', 'rb') as f:
+        # Build an absolute path to the model file
+        model_path = os.path.join(os.path.dirname(__file__), 'spam_detector_model.pkl')
+        
+        # Confirm the file exists before loading
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f"Model file not found at: {model_path}")
+
+        # Load the model
+        with open(model_path, 'rb') as f:
             model = dill.load(f)
+
         return model
+
     except Exception as e:
-        print(f"Error loading model: {e}")
+        print(f"⚠️ Error loading model: {e}")
         return None
 
 
@@ -1776,4 +1787,5 @@ st.markdown("""
         © 2025 Group 1 Spam Detector | All Rights Reserved
     </p>
 </div>
+
 """, unsafe_allow_html=True)
