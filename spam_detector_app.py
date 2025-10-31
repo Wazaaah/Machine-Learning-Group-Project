@@ -544,26 +544,14 @@ STOP_WORDS, LEMMATIZER, SIA = init_nlp_tools()
 
 # Load model
 def load_model():
-    """Search all directories and load the trained model safely"""
+    """Load the trained model"""
     try:
-        model_name = 'spam_detector_model.pkl'
-        found_path = None
-
-        # Walk through all directories starting from the current one
-        for root, dirs, files in os.walk(os.getcwd()):
-            if model_name in files:
-                found_path = os.path.join(root, model_name)
-                break  # Stop once found
-
-        if not found_path:
-            raise FileNotFoundError(f"⚠️ Model file '{model_name}' not found in any directory!")
-
-        # Load the model
-        with open(found_path, 'rb') as f:
+        with open('spam_detector_model.pkl', 'rb') as f:
             model = dill.load(f)
-
-        print(f"✅ Model loaded successfully from: {found_path}")
         return model
+    except Exception as e:
+        print(f"Error loading model: {e}")
+        return None
 
     except Exception as e:
         print(f"⚠️ Error loading model: {e}")
@@ -744,8 +732,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-print("Current working directory:", os.getcwd())
-print("Files in directory:", os.listdir())
 
 # Load model
 model = load_model()
@@ -1799,6 +1785,7 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
