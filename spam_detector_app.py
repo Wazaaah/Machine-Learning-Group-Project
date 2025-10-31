@@ -5,7 +5,6 @@ import plotly.graph_objects as go
 import plotly.express as px
 from datetime import datetime
 import time
-import dill
 import os
 import re
 from textblob import TextBlob
@@ -547,11 +546,11 @@ STOP_WORDS, LEMMATIZER, SIA = init_nlp_tools()
 def load_model():
     """Load the trained model"""
     try:
-        with open('spam_detector_model.pkl', 'rb') as f:
-            model = dill.load(f)
+        model = joblib.load('spam_detector_model.pkl')
+        print("✅ Model loaded successfully.")
         return model
     except Exception as e:
-        print(f"Error loading model: {e}")
+        print(f"❌ Error loading model: {e}")
         return None
 
 
@@ -1782,6 +1781,7 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
