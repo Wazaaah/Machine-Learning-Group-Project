@@ -543,14 +543,23 @@ STOP_WORDS, LEMMATIZER, SIA = init_nlp_tools()
 
 
 # Load model
+st.write("📂 **Current working directory:**", os.getcwd())
+st.write("📁 **Files in directory:**", os.listdir())
+
+# --- Step 2: Try to load the model safely ---
 def load_model():
     """Load the trained model"""
     try:
-        model = joblib.load('spam_detector_model.pkl')
-        print("✅ Model loaded successfully.")
+        model_path = os.path.join(os.getcwd(), 'spam_detector_model.pkl')
+        model = joblib.load(model_path)
+        st.success("✅ Model loaded successfully.")
         return model
+    except FileNotFoundError:
+        st.error("⚠️ Model Not Found! Please ensure 'spam_detector_model.pkl' is in the directory.")
+        st.info("💡 Quick Fix: Train your model and save it using: `joblib.dump(pipeline, 'spam_detector_model.pkl')`")
+        return None
     except Exception as e:
-        print(f"❌ Error loading model: {e}")
+        st.error(f"❌ Error loading model: {e}")
         return None
 
 
@@ -1781,6 +1790,7 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
