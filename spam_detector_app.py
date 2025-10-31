@@ -20,11 +20,6 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.sentiment import SentimentIntensityAnalyzer
-st.write("✅ App started running")
-
-# Debugging info for Streamlit Cloud
-st.write("📂 Current working directory:", os.getcwd())
-st.write("📄 Files in current directory:", os.listdir())
 
 
 # Page configuration
@@ -1804,6 +1799,7 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
