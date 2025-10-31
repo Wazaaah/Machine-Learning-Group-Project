@@ -21,11 +21,6 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.sentiment import SentimentIntensityAnalyzer
 
-import os, streamlit as st
-cwd = os.getcwd()
-st.write("Working directory:", cwd)
-for p, d, f in os.walk(cwd):
-    st.write("Path:", p, "Files:", f)
 
 
 # Page configuration
@@ -550,17 +545,17 @@ STOP_WORDS, LEMMATIZER, SIA = init_nlp_tools()
 
 # Load model
 def load_model():
-    """Load the trained model"""
+    model_path = "/mount/src/machine-learning-group-project/spam_detector_model.pkl"
+    st.write(f"Trying to load model from: {model_path}")
+    
     try:
-        with open('spam_detector_model.pkl', 'rb') as f:
+        with open(model_path, "rb") as f:
             model = dill.load(f)
+        st.success("✅ Model loaded successfully!")
         return model
     except Exception as e:
-        print(f"Error loading model: {e}")
-        return None
-
-    except Exception as e:
-        print(f"⚠️ Error loading model: {e}")
+        st.error("❌ Error loading model")
+        st.code(traceback.format_exc())  # show full stack trace
         return None
 
 
@@ -1791,6 +1786,7 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
