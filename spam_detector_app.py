@@ -545,19 +545,15 @@ def simple_tokenizer(text):
     """Split text into tokens (already preprocessed)"""
     return text.split()
     
+# Load model
 def load_model():
     """Load the trained model"""
     try:
-        model_path = os.path.join(os.getcwd(), 'spam_detector_model.pkl')
-        model = joblib.load(model_path)
-        st.success("✅ Model loaded successfully.")
+        model = joblib.load('spam_detector_model.pkl')
+        print("✅ Model loaded successfully.")
         return model
-    except FileNotFoundError:
-        st.error("⚠️ Model Not Found! Please ensure 'spam_detector_model.pkl' is in the directory.")
-        st.info("💡 Quick Fix: Train your model and save it using: `joblib.dump(pipeline, 'spam_detector_model.pkl')`")
-        return None
     except Exception as e:
-        st.error(f"❌ Error loading model: {e}")
+        print(f"❌ Error loading model: {e}")
         return None
 
 
@@ -1788,6 +1784,7 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
