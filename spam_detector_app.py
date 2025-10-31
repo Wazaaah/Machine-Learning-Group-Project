@@ -545,17 +545,13 @@ STOP_WORDS, LEMMATIZER, SIA = init_nlp_tools()
 
 # Load model
 def load_model():
-    model_path = "/mount/src/machine-learning-group-project/spam_detector_model.pkl"
-    st.write(f"Trying to load model from: {model_path}")
-    
+    """Load the trained model"""
     try:
-        with open(model_path, "rb") as f:
+        with open('spam_detector_model.pkl', 'rb') as f:
             model = dill.load(f)
-        st.success("✅ Model loaded successfully!")
         return model
     except Exception as e:
-        st.error("❌ Error loading model")
-        st.code(traceback.format_exc())  # show full stack trace
+        print(f"Error loading model: {e}")
         return None
 
 
@@ -1786,6 +1782,7 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
