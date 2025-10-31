@@ -541,12 +541,10 @@ def init_nlp_tools():
 
 STOP_WORDS, LEMMATIZER, SIA = init_nlp_tools()
 
-
-# Load model
-st.write("📂 **Current working directory:**", os.getcwd())
-st.write("📁 **Files in directory:**", os.listdir())
-
-# --- Step 2: Try to load the model safely ---
+def simple_tokenizer(text):
+    """Split text into tokens (already preprocessed)"""
+    return text.split()
+    
 def load_model():
     """Load the trained model"""
     try:
@@ -1790,6 +1788,7 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
