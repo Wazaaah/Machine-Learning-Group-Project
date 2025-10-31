@@ -550,7 +550,6 @@ def load_model():
     """Load the trained model"""
     try:
         model = joblib.load('spam_detector_model.pkl')
-        print("✅ Model loaded successfully.")
         return model
     except Exception as e:
         print(f"❌ Error loading model: {e}")
@@ -1784,6 +1783,7 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
