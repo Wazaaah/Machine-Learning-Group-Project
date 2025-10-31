@@ -21,6 +21,12 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.sentiment import SentimentIntensityAnalyzer
 
+import os, streamlit as st
+cwd = os.getcwd()
+st.write("Working directory:", cwd)
+for p, d, f in os.walk(cwd):
+    st.write("Path:", p, "Files:", f)
+
 
 # Page configuration
 st.set_page_config(
@@ -1785,6 +1791,7 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
 
