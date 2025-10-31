@@ -21,6 +21,10 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.sentiment import SentimentIntensityAnalyzer
 
+print("🔍 Current working directory:", os.getcwd())
+print("📁 Files available:", os.listdir(os.getcwd()))
+
+
 # Page configuration
 st.set_page_config(
     page_title="🛡️ Group 1 Spam Detector",
@@ -1798,5 +1802,6 @@ st.markdown("""
 </div>
 
 """, unsafe_allow_html=True)
+
 
 
