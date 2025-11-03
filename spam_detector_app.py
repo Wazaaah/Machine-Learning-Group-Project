@@ -10,7 +10,6 @@ import plotly.graph_objects as go
 import plotly.express as px
 from datetime import datetime
 import time
-import dill
 import re
 from textblob import TextBlob
 import joblib
@@ -555,17 +554,10 @@ def simple_tokenizer(text):
 # Load model
 @st.cache_resource
 def load_model():
-    try:
-        model = joblib.load('spam_detector_model.pkl')
-        return model
-    except:
-        try:
-            import dill
-            with open('spam_detector_model.pkl', 'rb') as f:
-                model = dill.load(f)
-            return model
-        except:
-            return None
+    model = joblib.load('spam_detector_model.pkl')
+    return model
+        
+    
 
 # Text preprocessing
 def advanced_text_preprocessing(text):
@@ -1075,3 +1067,4 @@ st.markdown("""
     Group 1 Spam Detector © 2025 | Built with Streamlit
 </div>
 """, unsafe_allow_html=True)
+
