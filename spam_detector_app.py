@@ -753,7 +753,7 @@ with st.sidebar:
         st.rerun()
 
 # Main Content
-if page == "🏠 Detector":
+if page == "Detector":
     tab1, tab2, tab3 = st.tabs(["Single Message", "Batch Analysis", "Examples"])
 
     with tab1:
@@ -992,7 +992,7 @@ if page == "🏠 Detector":
                         else:
                             st.success(f"HAM ({max(probability)*100:.1f}%)")
 
-elif page == "📊 Analytics":
+elif page == "Analytics":
     st.markdown("### Analytics Dashboard")
 
     if st.session_state.history:
@@ -1030,7 +1030,7 @@ elif page == "📊 Analytics":
     else:
         st.info("No data available. Start analyzing messages to see analytics.")
 
-elif page == "📜 History":
+elif page == "History":
     st.markdown("### Analysis History")
 
     if st.session_state.history:
@@ -1104,4 +1104,3 @@ st.markdown("""
     Group 1 Spam Detector © 2025 | Built with Streamlit
 </div>
 """, unsafe_allow_html=True)
-
