@@ -1,8 +1,3 @@
-"""
-GROUP 1 SPAM DETECTOR
-Modern, Professional UI/UX Design - 2025
-"""
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -10,7 +5,6 @@ import plotly.graph_objects as go
 import plotly.express as px
 from datetime import datetime
 import time
-import dill
 import re
 from textblob import TextBlob
 import joblib
@@ -1110,3 +1104,4 @@ st.markdown("""
     Group 1 Spam Detector © 2025 | Built with Streamlit
 </div>
 """, unsafe_allow_html=True)
+
