@@ -10,6 +10,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from datetime import datetime
 import time
+import dill
 import re
 from textblob import TextBlob
 import joblib
@@ -515,6 +516,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Initialize session state
+if 'selected_model' not in st.session_state:
+    st.session_state.selected_model = "Logistic Regression"
 if 'history' not in st.session_state:
     st.session_state.history = []
 if 'total_scanned' not in st.session_state:
@@ -553,11 +556,22 @@ def simple_tokenizer(text):
 
 # Load model
 @st.cache_resource
-def load_model():
-    model = joblib.load('spam_detector_model.pkl')
-    return model
-        
-    
+def load_all_models():
+    """Load all available models"""
+    models = {}
+    # Try to load Tuned Logistic Regression
+    try:
+        models['Logistic Regression'] = joblib.load('logistic_regression_spam_detector_model.pkl')
+    except:
+        pass
+
+    # Try to load Tuned Naive Bayes
+    try:
+        models['Naive Bayes'] = joblib.load('naive_bayes_spam_detector.pkl')
+    except:
+        pass
+
+    return models
 
 # Text preprocessing
 def advanced_text_preprocessing(text):
@@ -681,20 +695,49 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Load model
-model = load_model()
+# Load all models
+all_models = load_all_models()
 
-if model is None:
-    st.error("⚠️ Model file not found. Please ensure 'spam_detector_model.pkl' is in the directory.")
+if not all_models:
+    st.error("⚠️ No model files found. Please ensure at least one model file is in the directory.")
     st.stop()
 
 # Sidebar
 with st.sidebar:
     st.markdown("### Navigation")
-    page = st.radio("", ["🏠 Detector", "📊 Analytics", "📜 History", "ℹ️ About"],
+    page = st.radio("", ["Detector", "Analytics", "History", "About"],
                     label_visibility="collapsed")
 
     st.divider()
+
+    # MODEL SELECTOR - ADD THIS NEW SECTION
+    st.markdown("### Model Selection")
+
+    available_models = list(all_models.keys())
+
+    # Display model selector
+    selected_model_name = st.selectbox(
+        "Choose Model",
+        available_models,
+        index=available_models.index(
+            st.session_state.selected_model) if st.session_state.selected_model in available_models else 0,
+        key="model_selector"
+    )
+
+    # Update session state
+    if selected_model_name != st.session_state.selected_model:
+        st.session_state.selected_model = selected_model_name
+        st.rerun()
+
+    # Get the active model
+    model = all_models[st.session_state.selected_model]
+
+    # Show model info
+    st.caption(f"Active: {st.session_state.selected_model}")
+
+    st.divider()
+    # END OF MODEL SELECTOR
+
     st.markdown("### Statistics")
 
     col1, col2 = st.columns(2)
@@ -1067,4 +1110,3 @@ st.markdown("""
     Group 1 Spam Detector © 2025 | Built with Streamlit
 </div>
 """, unsafe_allow_html=True)
-
